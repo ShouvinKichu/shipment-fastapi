@@ -21,9 +21,13 @@ class BaseShipment(BaseModel):
 class ShipmentRead(BaseShipment):
     status: ShipmentStatus
 
+class Order(BaseModel):
+        price : int
+        title : str
+        description : str
 
 class ShipmentCreate(BaseShipment):
-    pass
+    order : Order
 
 class ShipmentUpdate(BaseModel):
     status : ShipmentStatus

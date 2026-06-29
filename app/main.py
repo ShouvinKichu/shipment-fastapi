@@ -66,8 +66,7 @@ def submit_shipment(shipment : ShipmentCreate) -> dict[str, Any]:
 
     new_id = max(shipments.keys()) +1
     shipments[new_id] = {
-        "content" : shipment.content,
-        "weight" : shipment.weight,
+        **shipment.model_dump(),
         "status" : "Placed",
     }
     return {"id" : new_id}
@@ -83,13 +82,7 @@ def shipment_patch(
     id: int,
     body : ShipmentUpdate
 ):
-    # if content:
-    #     shipment["content"] = content
-    # if weight:
-    #     shipment["weight"] = weight
-    # if status:
-    #     shipment["status"] = status
-    shipments[id].update(body)
+    shipments[id].update(body.model_dump(exclude_unset=True))
     return shipments[id]
 
 @app.delete("/shipment")
