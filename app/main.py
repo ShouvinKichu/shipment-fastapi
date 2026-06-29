@@ -79,6 +79,39 @@ def submit_shipment(data : dict[str, Any]) -> dict[str, Any]:
     }
     return {"id" : new_id}
 
+@app.put("/shipment")
+def shipment_update(id: int, content: str, weight: float, status: str) -> dict[str,Any]:
+    shipments[id] = {
+        "content" : content,
+        "weight" : weight,
+        "status" : status,
+    }
+    return shipments[id]
+
+@app.patch("/shipment")
+def shipment_patch(
+    id: int,
+    body : dict[str, Any]
+):
+    shipment = shipments[id]
+
+    # if content:
+    #     shipment["content"] = content
+    # if weight:
+    #     shipment["weight"] = weight
+    # if status:
+    #     shipment["status"] = status
+
+    shipment.update(body)
+
+    shipments[id] = shipment
+    return shipment
+
+@app.delete("/shipment")
+def shipment_delete(id : int) -> dict[str,str]:
+    shipments.pop(id)
+    return {"detail" : f"Shipment with id #{id} is deleted!"}
+
 @app.get("/shipment/{field}")
 def get_shipment_field(field : str, id : int) -> Any:
     return shipments[id][field]
