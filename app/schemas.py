@@ -27,7 +27,7 @@ class Order(BaseModel):
         description : str
 
 class ShipmentCreate(BaseShipment):
-    order : Order
+    pass
 
 class ShipmentUpdate(BaseModel):
     status : ShipmentStatus
