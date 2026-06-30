@@ -1,0 +1,37 @@
+[
+  { "id": 12701, "weight": 2.1, "content": "Mirror", "status": "Placed" },
+  { "id": 12702, "weight": 7.8, "content": "Books", "status": "in transit" },
+  {
+    "id": 12703,
+    "weight": 1.5,
+    "content": "Smartphone",
+    "status": "delivered"
+  },
+  {
+    "id": 12704,
+    "weight": 12.0,
+    "content": "Garden tools",
+    "status": "pending"
+  },
+  { "id": 12705, "weight": 0.9, "content": "Jewelry", "status": "Placed" },
+  {
+    "id": 12706,
+    "weight": 3.2,
+    "content": "Office chair",
+    "status": "in transit"
+  },
+  {
+    "id": 12707,
+    "weight": 5.4,
+    "content": "Kitchenware",
+    "status": "delivered"
+  },
+  {
+    "content": "protein powder",
+    "weight": 6.0,
+    "destination": 11077,
+    "order": { "price": 10, "title": "powder", "description": "whey protein" },
+    "id": 12708,
+    "status": "Placed"
+  }
+]

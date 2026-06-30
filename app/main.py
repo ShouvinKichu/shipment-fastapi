@@ -1,47 +1,12 @@
 from fastapi import FastAPI,HTTPException, status
 from typing import Any
 from scalar_fastapi import get_scalar_api_reference
+
 from app.schemas import ShipmentRead, ShipmentCreate, ShipmentUpdate
+from app.database import save, shipments
 
 app = FastAPI()
 
-shipments = {
-    12701: {
-        "weight" : 2.1,
-        "content" : "Mirror",
-        "status" : "Placed"
-    },
-    12702: {
-        "weight" : 7.8,
-        "content" : "Books",
-        "status" : "in transit"
-    },
-    12703: {
-        "weight" : 1.5,
-        "content" : "Smartphone",
-        "status" : "delivered"
-    },
-    12704: {
-        "weight" : 12.0,
-        "content" : "Garden tools",
-        "status" : "pending"
-    },
-    12705: {
-        "weight" : 0.9,
-        "content" : "Jewelry",
-        "status" : "Placed"
-    },
-    12706: {
-        "weight" : 3.2,
-        "content" : "Office chair",
-        "status" : "in transit"
-    },
-    12707: {
-        "weight" : 5.4,
-        "content" : "Kitchenware",
-        "status" : "delivered"
-    }
-}
 
 @app.get("/shipment/latest")
 def get_latest_shipment():
@@ -67,8 +32,10 @@ def submit_shipment(shipment : ShipmentCreate) -> dict[str, Any]:
     new_id = max(shipments.keys()) +1
     shipments[new_id] = {
         **shipment.model_dump(),
+        "id" : new_id,
         "status" : "Placed",
     }
+    save()
     return {"id" : new_id}
 
 @app.put("/shipment", response_model=ShipmentRead)
@@ -83,6 +50,7 @@ def shipment_patch(
     body : ShipmentUpdate
 ):
     shipments[id].update(body.model_dump(exclude_unset=True))
+    save()
     return shipments[id]
 
 @app.delete("/shipment")
